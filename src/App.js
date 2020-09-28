@@ -6,20 +6,14 @@ import { Product } from "./components/Product";
 import { Typography } from "./components/Typography";
 import { GlobalStyles } from "./components/GlobalStyles";
 
-const apiKey = "";
-const baseId = "";
-
 const getRecords = async () => {
-  const table = "products";
-  const nonEmpty = "NOT({amount} = '')";
-  const url = `https://api.airtable.com/v0/${baseId}/${table}?view=all&filterByFormula=${nonEmpty}`;
-  const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${apiKey}` } });
+  const url = `../.netlify/functions/airtable`;
+  const { data } = await axios.get(url);
   return data.records;
 };
 
 const resetProduct = async (id) => {
-  const table = "products";
-  const url = `https://api.airtable.com/v0/${baseId}/${table}`;
+  const url = `../.netlify/functions/resetProduct`;
   await axios.patch(
     url,
     { records: [{ id, fields: { amount: null } }] },
