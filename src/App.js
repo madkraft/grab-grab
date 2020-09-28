@@ -8,17 +8,14 @@ import { GlobalStyles } from "./components/GlobalStyles";
 
 const getRecords = async () => {
   const url = `../.netlify/functions/airtable`;
-  const { data } = await axios.get(url);
-  return data.records;
+  const { records } = await axios.get(url);
+  debugger;
+  return records;
 };
 
 const resetProduct = async (id) => {
   const url = `../.netlify/functions/resetProduct`;
-  await axios.patch(
-    url,
-    { records: [{ id, fields: { amount: null } }] },
-    { headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" } }
-  );
+  await axios.patch(url, { records: [{ id, fields: { amount: null } }] });
 };
 
 const transformProducts = (products) => {

@@ -3,14 +3,13 @@ exports.handler = async (event, context, callback) => {
     callback(null, { statusCode: 200, body: JSON.stringify(body) });
   };
   const table = "products";
-  const baseId = "app2w1Wmd8YVKuN4L";
-  const url = `https://api.airtable.com/v0/${baseId}/${table}`;
+  const url = `https://api.airtable.com/v0/${process.env.REACT_APP_BASE}/${table}`;
 
   try {
     let response = await fetch(url, {
       method: event.httpMethod,
       headers: {
-        Authorization: `Bearer keycp4qT80lAsWR5k`,
+        Authorization: `Bearer ${process.env.REACT_APP_NOT_SECRET_CODE}`,
         "Content-Type": "application/json"
       },
       body: event.body
