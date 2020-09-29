@@ -1,4 +1,6 @@
 exports.handler = async (event, context, callback) => {
+  const axios = require("axios");
+
   const pass = (body) => {
     callback(null, { statusCode: 200, body: JSON.stringify(body) });
   };
@@ -6,16 +8,9 @@ exports.handler = async (event, context, callback) => {
   const url = `https://api.airtable.com/v0/${process.env.REACT_APP_BASE}/${table}`;
 
   try {
-    let response = await fetch(url, {
-      method: event.httpMethod,
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_NOT_SECRET_CODE}`,
-        "Content-Type": "application/json"
-      },
-      body: event.body
+    await axios.patch(url, event.body, {
+      headers: { Authorization: `Bearer ${process.env.REACT_APP_NOT_SECRET_CODE}`, "Content-Type": "application/json" }
     });
-    let data = await response.json();
-    await pass(data);
   } catch (err) {
     let error = {
       statusCode: err.statusCode || 500,

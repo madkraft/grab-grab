@@ -8,9 +8,8 @@ import { GlobalStyles } from "./components/GlobalStyles";
 
 const getRecords = async () => {
   const url = `../.netlify/functions/airtable`;
-  const { records } = await axios.get(url);
-  debugger;
-  return records;
+  const { data } = await axios.get(url);
+  return data.records;
 };
 
 const resetProduct = async (id) => {
@@ -37,12 +36,10 @@ const transformProducts = (products) => {
 function App() {
   const [categories, setCategories] = useState({});
   const [isEmpty, setIsEmpty] = useState();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const records = await getRecords();
-      setIsLoading(false);
       setCategories(transformProducts(records));
     };
 
@@ -52,23 +49,14 @@ function App() {
   useEffect(() => {
     const activeLists = Object.values(categories).filter((products) => products.length);
 
-    if (Object.keys(categories).length === 0) {
-      setIsLoading(true);
-
-      return;
-    }
-
     setIsEmpty(!activeLists.length);
   }, [categories]);
 
   const handleClick = ({ category, name, id }) => {
     const res = categories[category].filter((cat) => cat.name !== name);
+    categories[category] = res;
 
-    setCategories({
-      ...categories,
-      [category]: res
-    });
-
+    setCategories({ ...categories });
     resetProduct(id);
   };
 
@@ -78,14 +66,9 @@ function App() {
       <GlobalStyles />
       <Typography />
       <Box bg="gray.800">
-        {isLoading && (
-          <Box padding="4rem" color="gray.500" fontSize="2xl" textAlign="center">
-            Loading...
-          </Box>
-        )}
         {isEmpty && (
           <Box padding="4rem" color="gray.500" fontSize="2xl" textAlign="center">
-            Good job!
+            All grabbed. Good job!
           </Box>
         )}
 

@@ -1,7 +1,6 @@
 - React
 - Chakra
 - Airtable
+- netlify + netlify functions
 
-- categories as accordeon
-- with products as squares with number inside
-- tapping on a product means it;s bought
+- on slide down -> reload
