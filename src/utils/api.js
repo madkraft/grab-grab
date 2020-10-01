@@ -15,13 +15,6 @@ const allProducts = [
       category: "Test category",
       name: "test product 2"
     }
-  },
-  {
-    id: 2,
-    fields: {
-      category: "Test category 2",
-      name: "test product 3"
-    }
   }
 ];
 

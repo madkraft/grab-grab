@@ -22,13 +22,6 @@ export const Nav = () => {
     getAllProducts();
   }, []);
 
-  const handleRemoveProduct = ({ category, name, id }) => {
-    const res = listCategories[category].filter((cat) => cat.name !== name);
-    listCategories[category] = res;
-    setListCategories({ ...listCategories });
-    setProduct(id, null);
-  };
-
   const setNewListCategoryAmount = (product, amount) => {
     const { category, id } = product;
 
@@ -55,6 +48,17 @@ export const Nav = () => {
     return { ...allCategories };
   };
 
+  const handleRemoveProduct = (product) => {
+    const { category, id } = product;
+
+    listCategories[category] = listCategories[category].filter((cat) => cat.id !== id);
+    const newAllCategories = setNewAllCategoryAmount(product, 0);
+
+    setProduct(id, null);
+    setListCategories({ ...listCategories });
+    setAllCategories(newAllCategories);
+  };
+
   const handleAddToList = (product) => {
     const { id, amount } = product;
 
@@ -74,16 +78,16 @@ export const Nav = () => {
   };
 
   return (
-    <Tabs variant="soft-rounded" height="100vh" display="flex" flexDirection="column" justifyContent="space-between">
-      <TabPanels height="100%">
-        <TabPanel height="100%" onTouchStart={swipeStart} onTouchEnd={swipeEnd(onSwipeDown)}>
+    <Tabs variant="soft-rounded">
+      <TabPanels height="calc(100vh - 72px)" overflow="scroll">
+        <TabPanel onTouchStart={swipeStart} onTouchEnd={swipeEnd(onSwipeDown)}>
           <List categories={listCategories} loading={loading} removeProduct={handleRemoveProduct} />
         </TabPanel>
         <TabPanel>
           <AllItems categories={allCategories} addToList={handleAddToList} />
         </TabPanel>
       </TabPanels>
-      <TabList justifyContent="center" mb="1rem">
+      <TabList justifyContent="center" position="fixed" bottom="0" width="100%" paddingY="1rem" bg="#1a202c">
         <Tab _selected={{ color: "white", bg: "teal.400" }}>Grab</Tab>
         <Tab _selected={{ color: "white", bg: "orange.400" }}>All Items</Tab>
         <Tab>Codes</Tab>

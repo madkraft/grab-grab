@@ -8,3 +8,6 @@
 - add photos of bar codes for discounts
 - add animation instead of loading
 - animate when removing and adding to the list
+- able to add manage all products via app
+- able to manage bar codes via app
+- able to specify amount of product
