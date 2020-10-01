@@ -5,4 +5,6 @@
 - PWA
 - pull down to refresh
 
-- on slide down -> reload
+- add photos of bar codes for discounts
+- add animation instead of loading
+- animate when removing and adding to the list

@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/core";
 export const Product = ({ name, amount, handleClick }) => {
   return (
     <Box
-      bg="teal.400"
+      bg={amount ? "teal.400" : "orange.400"}
       color="white"
       padding="0.5rem"
       textAlign="center"
@@ -16,7 +16,7 @@ export const Product = ({ name, amount, handleClick }) => {
       onClick={handleClick}
     >
       <Box fontSize="xl">{name}</Box>
-      <Box fontSize="sm">{amount}</Box>
+      {/* <Box fontSize="sm">{amount}</Box> */}
     </Box>
   );
 };
