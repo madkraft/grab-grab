@@ -2,14 +2,14 @@ import React from "react";
 import { Box } from "@chakra-ui/core";
 import { EmptyList } from "./EmptyList";
 import { ProductList } from "./ProductList";
+import { ReactComponent as Loader } from "../assets/images/loading.svg";
 
 export const List = ({ categories, loading, removeProduct }) => {
   return (
     <Box bg="gray.800">
       {loading && (
-        <Box fontSize="1.5rem" color="gray.500" textAlign="center">
-          {/* add animation here */}
-          Getting new items...
+        <Box display="flex" justifyContent="center" mt="1rem">
+          <Loader height="50px" />
         </Box>
       )}
 
