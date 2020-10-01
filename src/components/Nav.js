@@ -20,6 +20,16 @@ export const Nav = () => {
     };
 
     getAllProducts();
+
+    const onSwipeDown = async () => {
+      setLoading(true);
+      const records = await fetchRecords({ all: false });
+      setListCategories(transformProducts(records));
+      setLoading(false);
+    };
+
+    document.addEventListener("touchstart", swipeStart, false);
+    document.addEventListener("touchend", swipeEnd(onSwipeDown), false);
   }, []);
 
   const setNewListCategoryAmount = (product, amount) => {
@@ -70,17 +80,10 @@ export const Nav = () => {
     setAllCategories(newAllCategories);
   };
 
-  const onSwipeDown = async () => {
-    setLoading(true);
-    const records = await fetchRecords({ all: false });
-    setListCategories(transformProducts(records));
-    setLoading(false);
-  };
-
   return (
     <Tabs variant="soft-rounded">
       <TabPanels height="calc(100vh - 72px)" overflow="scroll">
-        <TabPanel onTouchStart={swipeStart} onTouchEnd={swipeEnd(onSwipeDown)}>
+        <TabPanel>
           <List categories={listCategories} loading={loading} removeProduct={handleRemoveProduct} />
         </TabPanel>
         <TabPanel>

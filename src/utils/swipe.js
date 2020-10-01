@@ -4,6 +4,10 @@ const pStop = { x: 0, y: 0 };
 export const swipeStart = (e) => {
   if (typeof e["targetTouches"] !== "undefined") {
     const touch = e.targetTouches[0];
+    if (touch.target.offsetTop > 300) {
+      return;
+    }
+
     pStart.x = touch.screenX;
     pStart.y = touch.screenY;
   } else {
