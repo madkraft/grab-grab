@@ -92,7 +92,7 @@ export const Nav = () => {
 
   return (
     <Tabs variant="soft-rounded">
-      <TabPanels height="calc(100vh - 72px)" overflow="auto">
+      <TabPanels height="calc(100vh - 72px)" overflow="scroll">
         <TabPanel>
           <List
             categories={listCategories}
