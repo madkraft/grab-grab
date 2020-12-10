@@ -40,7 +40,9 @@ export const Nav = () => {
         ? [...listCategories[category], { ...product, amount }]
         : [{ ...product, amount: 1 }];
     } else {
-      listCategories[category] = listCategories[category].filter((cat) => cat.id !== id);
+      listCategories[category] = listCategories[category].filter(
+        (cat) => cat.id !== id
+      );
     }
 
     return { ...listCategories };
@@ -61,7 +63,9 @@ export const Nav = () => {
   const handleRemoveProduct = (product) => {
     const { category, id } = product;
 
-    listCategories[category] = listCategories[category].filter((cat) => cat.id !== id);
+    listCategories[category] = listCategories[category].filter(
+      (cat) => cat.id !== id
+    );
     const newAllCategories = setNewAllCategoryAmount(product, 0);
 
     setProduct(id, null);
@@ -72,8 +76,14 @@ export const Nav = () => {
   const handleAddToList = (product) => {
     const { id, amount } = product;
 
-    const newListCategories = setNewListCategoryAmount(product, amount ? null : 1);
-    const newAllCategories = setNewAllCategoryAmount(product, amount ? null : 1);
+    const newListCategories = setNewListCategoryAmount(
+      product,
+      amount ? null : 1
+    );
+    const newAllCategories = setNewAllCategoryAmount(
+      product,
+      amount ? null : 1
+    );
 
     setProduct(id, amount ? null : 1);
     setListCategories(newListCategories);
@@ -82,15 +92,26 @@ export const Nav = () => {
 
   return (
     <Tabs variant="soft-rounded">
-      <TabPanels height="calc(100vh - 72px)" overflow="scroll">
+      <TabPanels height="calc(100vh - 72px)">
         <TabPanel>
-          <List categories={listCategories} loading={loading} removeProduct={handleRemoveProduct} />
+          <List
+            categories={listCategories}
+            loading={loading}
+            removeProduct={handleRemoveProduct}
+          />
         </TabPanel>
         <TabPanel>
           <AllItems categories={allCategories} addToList={handleAddToList} />
         </TabPanel>
       </TabPanels>
-      <TabList justifyContent="center" position="fixed" bottom="0" width="100%" paddingY="1rem" bg="#1a202c">
+      <TabList
+        justifyContent="center"
+        position="fixed"
+        bottom="0"
+        width="100%"
+        paddingY="1rem"
+        bg="#1a202c"
+      >
         <Tab _selected={{ color: "white", bg: "teal.400" }}>Grab</Tab>
         <Tab _selected={{ color: "white", bg: "orange.400" }}>All Items</Tab>
         <Tab>Codes</Tab>

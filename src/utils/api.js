@@ -6,16 +6,23 @@ const allProducts = [
     fields: {
       category: "Test category",
       name: "test product",
-      amount: 1
-    }
+      amount: 1,
+    },
   },
   {
     id: 2,
     fields: {
       category: "Test category",
-      name: "test product 2"
-    }
-  }
+      name: "test product 2",
+    },
+  },
+  {
+    id: 3,
+    fields: {
+      category: "Test category",
+      name: "test product 3",
+    },
+  },
 ];
 
 const listProducts = [
@@ -24,9 +31,9 @@ const listProducts = [
     fields: {
       category: "Test category",
       name: "test product",
-      amount: 1
-    }
-  }
+      amount: 1,
+    },
+  },
 ];
 
 export const fetchRecords = async ({ all } = { all: true }) => {
@@ -34,7 +41,9 @@ export const fetchRecords = async ({ all } = { all: true }) => {
     return all ? allProducts : listProducts;
   }
 
-  const url = all ? `../.netlify/functions/fetchAllProducts` : `../.netlify/functions/fetchListProducts`;
+  const url = all
+    ? `../.netlify/functions/fetchAllProducts`
+    : `../.netlify/functions/fetchListProducts`;
   const { data } = await axios.get(url);
   return data.records;
 };
