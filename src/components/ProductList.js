@@ -15,9 +15,18 @@ export const ProductList = ({ categories, handleClick }) => {
           <Box key={category}>
             <Category category={category} />
 
-            <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px" padding="5px">
+            <Box
+              display="grid"
+              gridTemplateColumns="1fr 1fr 1fr"
+              gridGap="5px"
+              padding="5px"
+            >
               {products.map((product) => (
-                <Product key={product.name} {...product} handleClick={() => handleClick(product)} />
+                <Product
+                  key={product.name}
+                  {...product}
+                  handleClick={() => handleClick(product)}
+                />
               ))}
             </Box>
           </Box>
