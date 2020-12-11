@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Button,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 import { List } from "./List";
 import { AllItems } from "./AllItems";
 import { fetchRecords, setProduct } from "../utils/api";
-import { swipeEnd, swipeStart } from "../utils/swipe";
-import { getProducts, transformProducts } from "../utils/records";
+// import { swipeEnd, swipeStart } from "../utils/swipe";
+import { getProducts } from "../utils/records";
 import { Codes } from "./Codes";
 
 export const Nav = () => {
   const [allCategories, setAllCategories] = useState({});
   const [listCategories, setListCategories] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -106,9 +113,29 @@ export const Nav = () => {
             loading={loading}
             removeProduct={handleRemoveProduct}
           />
+          <Button
+            width="100%"
+            marginTop="1rem"
+            variant="outline"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Reload
+          </Button>
         </TabPanel>
         <TabPanel padding="0.1rem">
           <AllItems categories={allCategories} addToList={handleAddToList} />
+          <Button
+            width="100%"
+            marginTop="1rem"
+            variant="outline"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Reload
+          </Button>
         </TabPanel>
         <TabPanel padding="0.1rem">
           <Codes />

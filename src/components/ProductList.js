@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Button, Input } from "@chakra-ui/react";
+import React from "react";
+import { Box } from "@chakra-ui/react";
 import { CategoryProducts } from "./CategoryProducts";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
