@@ -55,3 +55,23 @@ export const setProduct = async (id, amount) => {
   const url = `../.netlify/functions/resetProduct`;
   await axios.patch(url, { records: [{ id, fields: { amount } }] });
 };
+
+export const addProduct = async (productName, category) => {
+  if (process.env.NODE_ENV === "development") {
+    return;
+  }
+  const url = `../.netlify/functions/addProduct`;
+  return await axios.post(url, {
+    fields: { name: productName, category },
+  });
+};
+
+export const fetchCodes = async ({ all } = { all: true }) => {
+  if (process.env.NODE_ENV === "development") {
+    return;
+  }
+
+  const url = `../.netlify/functions/fetchCodes`;
+  const { data } = await axios.get(url);
+  return data.records;
+};

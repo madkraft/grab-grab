@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/core";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { List } from "./List";
 import { AllItems } from "./AllItems";
 import { fetchRecords, setProduct } from "../utils/api";
 import { swipeEnd, swipeStart } from "../utils/swipe";
 import { getProducts, transformProducts } from "../utils/records";
+import { Codes } from "./Codes";
 
 export const Nav = () => {
   const [allCategories, setAllCategories] = useState({});
@@ -21,15 +22,15 @@ export const Nav = () => {
 
     getAllProducts();
 
-    const onSwipeDown = async () => {
-      setLoading(true);
-      const records = await fetchRecords({ all: false });
-      setListCategories(transformProducts(records));
-      setLoading(false);
-    };
+    // const onSwipeDown = async () => {
+    //   setLoading(true);
+    //   const records = await fetchRecords({ all: false });
+    //   setListCategories(transformProducts(records));
+    //   setLoading(false);
+    // };
 
-    document.addEventListener("touchstart", swipeStart, false);
-    document.addEventListener("touchend", swipeEnd(onSwipeDown), false);
+    // document.addEventListener("touchstart", swipeStart, false);
+    // document.addEventListener("touchend", swipeEnd(onSwipeDown), false);
   }, []);
 
   const setNewListCategoryAmount = (product, amount) => {
@@ -91,31 +92,28 @@ export const Nav = () => {
   };
 
   return (
-    <Tabs variant="soft-rounded">
-      <TabPanels height="calc(100vh - 72px)" overflow="scroll">
-        <TabPanel>
+    <Tabs variant="soft-rounded" color="white">
+      <TabList justifyContent="center" paddingY="1rem" bg="#1a202c">
+        <Tab _selected={{ color: "white", bg: "teal.400" }}>Grab</Tab>
+        <Tab _selected={{ color: "white", bg: "orange.400" }}>All Items</Tab>
+        <Tab>Codes</Tab>
+      </TabList>
+
+      <TabPanels bg="#1a202c">
+        <TabPanel padding="0.1rem">
           <List
             categories={listCategories}
             loading={loading}
             removeProduct={handleRemoveProduct}
           />
         </TabPanel>
-        <TabPanel>
+        <TabPanel padding="0.1rem">
           <AllItems categories={allCategories} addToList={handleAddToList} />
         </TabPanel>
+        <TabPanel padding="0.1rem">
+          <Codes />
+        </TabPanel>
       </TabPanels>
-      <TabList
-        justifyContent="center"
-        position="fixed"
-        bottom="0"
-        width="100%"
-        paddingY="1rem"
-        bg="#1a202c"
-      >
-        <Tab _selected={{ color: "white", bg: "teal.400" }}>Grab</Tab>
-        <Tab _selected={{ color: "white", bg: "orange.400" }}>All Items</Tab>
-        <Tab>Codes</Tab>
-      </TabList>
     </Tabs>
   );
 };

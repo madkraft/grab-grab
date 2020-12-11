@@ -3,4 +3,3 @@
 - Airtable
 - netlify + netlify functions
 - PWA
-- pull down to refresh

@@ -1,9 +1,8 @@
-import { Box } from "@chakra-ui/core";
-import React from "react";
-import { Category } from "./Category";
-import { Product } from "./Product";
+import React, { useState } from "react";
+import { Box, Button, Input } from "@chakra-ui/react";
+import { CategoryProducts } from "./CategoryProducts";
 
-export const ProductList = ({ categories, handleClick }) => {
+export const ProductList = ({ categories, canManage, handleClick }) => {
   return (
     <>
       {Object.entries(categories).map(([category, products]) => {
@@ -13,22 +12,12 @@ export const ProductList = ({ categories, handleClick }) => {
 
         return (
           <Box key={category}>
-            <Category category={category} />
-
-            <Box
-              display="grid"
-              gridTemplateColumns="1fr 1fr 1fr"
-              gridGap="5px"
-              padding="5px"
-            >
-              {products.map((product) => (
-                <Product
-                  key={product.name}
-                  {...product}
-                  handleClick={() => handleClick(product)}
-                />
-              ))}
-            </Box>
+            <CategoryProducts
+              category={category}
+              products={products}
+              canManage={canManage}
+              handleClick={handleClick}
+            />
           </Box>
         );
       })}

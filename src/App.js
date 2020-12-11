@@ -1,17 +1,17 @@
 import React from "react";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { Typography } from "./components/Typography";
 import { GlobalStyles } from "./components/GlobalStyles";
 import { Nav } from "./components/Nav";
 
 const App = () => {
   return (
-    <ThemeProvider>
+    <ChakraProvider resetCSS={true}>
       <CSSReset />
       <GlobalStyles />
       <Typography />
       <Nav />
-    </ThemeProvider>
+    </ChakraProvider>
   );
 };
 

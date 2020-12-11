@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/react";
 
 export const Product = ({ name, amount, handleClick }) => {
   return (
@@ -17,7 +17,7 @@ export const Product = ({ name, amount, handleClick }) => {
       justifyContent="center"
       onClick={handleClick}
     >
-      <Box fontSize="xl">{name}</Box>
+      <Box fontSize="md">{name}</Box>
       {/* <Box fontSize="sm">{amount}</Box> */}
     </Box>
   );

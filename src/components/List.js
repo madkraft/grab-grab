@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/react";
 import { EmptyList } from "./EmptyList";
 import { ProductList } from "./ProductList";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
@@ -15,7 +15,9 @@ export const List = ({ categories, loading, removeProduct }) => {
 
       {!Object.entries(categories).length && <EmptyList />}
 
-      {Object.entries(categories).length && !Object.values(categories).filter((products) => products.length).length && <EmptyList />}
+      {Object.entries(categories).length &&
+        !Object.values(categories).filter((products) => products.length)
+          .length && <EmptyList />}
 
       <ProductList categories={categories} handleClick={removeProduct} />
     </Box>
