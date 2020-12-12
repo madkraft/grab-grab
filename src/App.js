@@ -1,16 +1,43 @@
 import React from "react";
-import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import { Typography } from "./components/Typography";
-import { GlobalStyles } from "./components/GlobalStyles";
-import { Nav } from "./components/Nav";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { AllItemsPage } from "./pages/AllItemsPage";
+import { SelectedItemsPage } from "./pages/SelectedItemsPage";
+import { CodesPage } from "./pages/CodesPage";
+import { theme } from "./theme";
 
+const globalTheme = extendTheme({
+  styles: {
+    global: {
+      html: {
+        height: "100%",
+      },
+      body: {
+        bg: theme.background,
+        color: theme.white,
+        height: "100%",
+      },
+    },
+  },
+});
+
+// <Typography /> */
 const App = () => {
   return (
-    <ChakraProvider resetCSS={true}>
-      <CSSReset />
-      <GlobalStyles />
-      <Typography />
-      <Nav />
+    <ChakraProvider theme={globalTheme}>
+      <Router>
+        <Switch>
+          <Route path="/" exact={true}>
+            <SelectedItemsPage />
+          </Route>
+          <Route path="/all" exact={true}>
+            <AllItemsPage />
+          </Route>
+          <Route path="/codes" exact={true}>
+            <CodesPage />
+          </Route>
+        </Switch>
+      </Router>
     </ChakraProvider>
   );
 };

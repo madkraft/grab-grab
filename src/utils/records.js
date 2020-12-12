@@ -9,7 +9,10 @@ export const transformProducts = (products) => {
     const { category } = fields;
 
     if (activeCategories[category]) {
-      activeCategories[category] = [...activeCategories[category], { ...fields, id }];
+      activeCategories[category] = [
+        ...activeCategories[category],
+        { ...fields, id },
+      ];
     } else {
       activeCategories[category] = [{ ...fields, id }];
     }
@@ -20,6 +23,9 @@ export const transformProducts = (products) => {
 
 export const getProducts = (products) => {
   const listProducts = getListProducts(products);
+  return transformProducts(listProducts);
+};
 
-  return [transformProducts(products), transformProducts(listProducts)];
+export const getAllProducts = (products) => {
+  return transformProducts(products);
 };

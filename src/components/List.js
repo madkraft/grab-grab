@@ -4,7 +4,7 @@ import { EmptyList } from "./EmptyList";
 import { ProductList } from "./ProductList";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
 
-export const List = ({ categories, loading, removeProduct }) => {
+export const List = ({ categories, loading, handleClick, canManage }) => {
   return (
     <Box bg="gray.800">
       {loading && (
@@ -19,7 +19,11 @@ export const List = ({ categories, loading, removeProduct }) => {
         !Object.values(categories).filter((products) => products.length)
           .length && <EmptyList />}
 
-      <ProductList categories={categories} handleClick={removeProduct} />
+      <ProductList
+        categories={categories}
+        handleClick={handleClick}
+        canManage={canManage}
+      />
     </Box>
   );
 };

@@ -23,11 +23,26 @@ const allProducts = [
       name: "test product 3",
     },
   },
+  {
+    id: 4,
+    fields: {
+      category: "Test category",
+      name: "test product 4",
+    },
+  },
 ];
 
 const listProducts = [
   {
     id: 1,
+    fields: {
+      category: "Test category",
+      name: "test product 2",
+      amount: 1,
+    },
+  },
+  {
+    id: 2,
     fields: {
       category: "Test category",
       name: "test product",
@@ -36,7 +51,7 @@ const listProducts = [
   },
 ];
 
-export const fetchRecords = async ({ all } = { all: true }) => {
+export const fetchRecords = async ({ all } = { all: false }) => {
   if (process.env.NODE_ENV === "development") {
     return all ? allProducts : listProducts;
   }
