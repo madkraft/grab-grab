@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@chakra-ui/react";
 
 import { List } from "../components/List";
 import { Page } from "../components/Page";
@@ -17,16 +16,6 @@ export const SelectedItemsPage = () => {
     };
 
     getSelectedProducts();
-
-    // const onSwipeDown = async () => {
-    //   setLoading(true);
-    //   const records = await fetchRecords({ all: false });
-    //   setListCategories(transformProducts(records));
-    //   setLoading(false);
-    // };
-
-    // document.addEventListener("touchstart", swipeStart, false);
-    // document.addEventListener("touchend", swipeEnd(onSwipeDown), false);
   }, []);
 
   const handleRemoveProduct = (product) => {
@@ -43,16 +32,6 @@ export const SelectedItemsPage = () => {
   return (
     <Page>
       <List categories={listCategories} handleClick={handleRemoveProduct} />
-      <Button
-        width="100%"
-        marginTop="1rem"
-        variant="outline"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        Reload
-      </Button>
     </Page>
   );
 };

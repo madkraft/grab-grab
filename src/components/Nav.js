@@ -13,7 +13,6 @@ const RouterLink = (props) => {
         borderRadius: "1rem",
         borderWidth: "3px",
         borderColor: "transparent",
-        margin: "0 1rem",
       }}
       activeStyle={{
         borderWidth: "3px",
@@ -34,7 +33,7 @@ export const Nav = () => {
       direction="row"
       align="center"
       justify="center"
-      padding="1rem"
+      padding="1rem 0"
     >
       <RouterLink color={theme.teal} to="/">
         Grab

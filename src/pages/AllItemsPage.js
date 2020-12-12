@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { List } from "../components/List";
 import { Page } from "../components/Page";
@@ -36,16 +35,6 @@ export const AllItemsPage = () => {
         handleClick={handleAddToList}
         canManage={true}
       />
-      <Button
-        width="100%"
-        marginTop="1rem"
-        variant="outline"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        Reload
-      </Button>
     </Page>
   );
 };
