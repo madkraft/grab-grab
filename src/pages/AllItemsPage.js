@@ -6,12 +6,14 @@ import { getAllProducts } from "../utils/records";
 
 export const AllItemsPage = () => {
   const [allCategories, setAllCategories] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProducts = async () => {
       const records = await fetchRecords({ all: true });
       const allProducts = getAllProducts(records);
       setAllCategories(allProducts);
+      setLoading(false);
     };
 
     getProducts();
@@ -26,11 +28,14 @@ export const AllItemsPage = () => {
 
     setProduct(id, amount ? null : 1);
     setAllCategories({ ...allCategories });
+    // invalidateCache();
+    // use context to propagate cache
   };
 
   return (
     <Page>
       <List
+        loading={loading}
         categories={allCategories}
         handleClick={handleAddToList}
         canManage={true}

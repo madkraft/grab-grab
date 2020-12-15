@@ -6,6 +6,7 @@ import { fetchRecords, setProduct } from "../utils/api";
 import { getProducts } from "../utils/records";
 
 export const SelectedItemsPage = () => {
+  const [loading, setLoading] = useState(true);
   const [listCategories, setListCategories] = useState({});
 
   useEffect(() => {
@@ -13,6 +14,7 @@ export const SelectedItemsPage = () => {
       const records = await fetchRecords();
       const listProducts = getProducts(records);
       setListCategories(listProducts);
+      setLoading(false);
     };
 
     getSelectedProducts();
@@ -31,7 +33,11 @@ export const SelectedItemsPage = () => {
 
   return (
     <Page>
-      <List categories={listCategories} handleClick={handleRemoveProduct} />
+      <List
+        loading={loading}
+        categories={listCategories}
+        handleClick={handleRemoveProduct}
+      />
     </Page>
   );
 };

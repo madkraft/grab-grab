@@ -34,6 +34,10 @@ export const Nav = () => {
       align="center"
       justify="center"
       padding="1rem 0"
+      position="sticky"
+      top="0"
+      background={theme.background}
+      zIndex="1"
     >
       <RouterLink color={theme.teal} to="/">
         Grab

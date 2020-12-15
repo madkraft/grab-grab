@@ -43,6 +43,7 @@ export const Codes = () => {
         {codes.map((code) => {
           return (
             <Box
+              key={code.id}
               bg="blue.500"
               minHeight="0"
               minWidth="0"
@@ -68,7 +69,7 @@ export const Codes = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{selectedCode.name}</ModalHeader>
+          <ModalHeader background="gray.600">{selectedCode.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Image

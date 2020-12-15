@@ -1,24 +1,39 @@
 import React, { useState } from "react";
-import { Box, Button, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Product } from "./Product";
 import { Category } from "./Category";
 import { addProduct } from "../utils/api";
+import { theme } from "../theme";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
-  const [manageMode, setManageMode] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState();
   const [newProduct, setNewProduct] = useState("");
-  // const [productsList, setProductsList] = useState(categories);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleManageProducts = () => {
-    setManageMode(!manageMode);
+  const initialRef = React.useRef();
+
+  const handleManageProducts = (category) => {
+    setSelectedCategory(category);
+    onOpen();
   };
 
   const handleAddProduct = (category) => {
     setNewProduct("");
     addProduct(newProduct, category).then(({ data }) => {
-      // setProductsList([{ id: data.id, ...data.fields }, ...productsList]);
+      window.location.reload();
     });
-    setManageMode(false);
+    onClose();
   };
 
   return (
@@ -35,26 +50,6 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
               canManage={canManage}
               manageProducts={handleManageProducts}
             />
-            {manageMode && (
-              <Box bg={"teal.400"} padding="1rem">
-                <Input
-                  color="white"
-                  variant="outline"
-                  marginBottom="1rem"
-                  value={newProduct}
-                  onChange={(e) => {
-                    setNewProduct(e.target.value);
-                  }}
-                />
-                <Button
-                  onClick={() => {
-                    handleAddProduct(category);
-                  }}
-                >
-                  Add
-                </Button>
-              </Box>
-            )}
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
                 <Product
@@ -67,6 +62,42 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
           </Box>
         );
       })}
+
+      <Modal
+        initialFocusRef={initialRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader background="gray.600">{selectedCategory}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody background={theme.background}>
+            <Box padding="1rem">
+              <Input
+                ref={initialRef}
+                color="white"
+                variant="outline"
+                marginBottom="1rem"
+                value={newProduct}
+                onChange={(e) => {
+                  setNewProduct(e.target.value);
+                }}
+              />
+              <Button
+                variant="outline"
+                onClick={() => {
+                  handleAddProduct(selectedCategory);
+                }}
+              >
+                Add
+              </Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

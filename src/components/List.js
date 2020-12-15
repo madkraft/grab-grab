@@ -13,11 +13,7 @@ export const List = ({ categories, loading, handleClick, canManage }) => {
         </Box>
       )}
 
-      {!Object.entries(categories).length && <EmptyList />}
-
-      {Object.entries(categories).length &&
-        !Object.values(categories).filter((products) => products.length)
-          .length && <EmptyList />}
+      {!loading && !Object.entries(categories).length && <EmptyList />}
 
       <ProductList
         categories={categories}

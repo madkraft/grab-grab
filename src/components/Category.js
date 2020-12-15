@@ -14,10 +14,10 @@ export const Category = ({ category, canManage, manageProducts }) => {
           _active={{ bg: "transparent" }}
           variant="ghost"
           onClick={() => {
-            manageProducts();
+            manageProducts(category);
           }}
         >
-          Edit
+          Add
         </Button>
       )}
     </Box>

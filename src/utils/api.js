@@ -1,59 +1,13 @@
 import axios from "axios";
-
-const allProducts = [
-  {
-    id: 1,
-    fields: {
-      category: "Test category",
-      name: "test product",
-      amount: 1,
-    },
-  },
-  {
-    id: 2,
-    fields: {
-      category: "Test category",
-      name: "test product 2",
-    },
-  },
-  {
-    id: 3,
-    fields: {
-      category: "Test category",
-      name: "test product 3",
-    },
-  },
-  {
-    id: 4,
-    fields: {
-      category: "Test category",
-      name: "test product 4",
-    },
-  },
-];
-
-const listProducts = [
-  {
-    id: 1,
-    fields: {
-      category: "Test category",
-      name: "test product 2",
-      amount: 1,
-    },
-  },
-  {
-    id: 2,
-    fields: {
-      category: "Test category",
-      name: "test product",
-      amount: 1,
-    },
-  },
-];
+import {
+  localAddProduct,
+  localFetchCodes,
+  localFetchRecords,
+} from "./localApi";
 
 export const fetchRecords = async ({ all } = { all: false }) => {
   if (process.env.NODE_ENV === "development") {
-    return all ? allProducts : listProducts;
+    return localFetchRecords(all);
   }
 
   const url = all
@@ -73,7 +27,7 @@ export const setProduct = async (id, amount) => {
 
 export const addProduct = async (productName, category) => {
   if (process.env.NODE_ENV === "development") {
-    return;
+    return localAddProduct(productName, category);
   }
   const url = `../.netlify/functions/addProduct`;
   return await axios.post(url, {
@@ -81,9 +35,9 @@ export const addProduct = async (productName, category) => {
   });
 };
 
-export const fetchCodes = async ({ all } = { all: true }) => {
+export const fetchCodes = async () => {
   if (process.env.NODE_ENV === "development") {
-    return;
+    return localFetchCodes();
   }
 
   const url = `../.netlify/functions/fetchCodes`;
