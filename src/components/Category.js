@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { theme } from "../theme";
 
 export const Category = ({ category, canManage, manageProducts }) => {
   return (
@@ -8,17 +10,17 @@ export const Category = ({ category, canManage, manageProducts }) => {
         {category}
       </Box>
       {canManage && (
-        <Button
-          color="white"
+        <IconButton
+          variant="ghost"
           _hover={{ bg: "transparent" }}
           _active={{ bg: "transparent" }}
-          variant="ghost"
+          aria-label="Search product"
+          color={theme.teal}
+          icon={<AddIcon />}
           onClick={() => {
             manageProducts(category);
           }}
-        >
-          Add
-        </Button>
+        />
       )}
     </Box>
   );

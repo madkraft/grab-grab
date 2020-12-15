@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
   Grid,
   Modal,
   ModalOverlay,
@@ -12,6 +11,7 @@ import {
   ModalHeader,
 } from "@chakra-ui/react";
 import { fetchCodes } from "../utils/api";
+import { Product } from "./Product";
 
 export const Codes = () => {
   const [codes, setCodes] = useState([]);
@@ -42,22 +42,11 @@ export const Codes = () => {
       <Grid templateColumns="repeat(2, 1fr)" gap={6}>
         {codes.map((code) => {
           return (
-            <Box
+            <Product
               key={code.id}
-              bg="blue.500"
-              minHeight="0"
-              minWidth="0"
-              padding="0.5rem"
-              textAlign="center"
-              height={32}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              onClick={() => handleCodeClick(code)}
-            >
-              <Box fontSize="xl">{code.name}</Box>
-            </Box>
+              name={code.name}
+              handleClick={() => handleCodeClick(code)}
+            />
           );
         })}
       </Grid>
