@@ -20,7 +20,6 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [newProduct, setNewProduct] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const initialRef = React.useRef();
 
   const handleManageProducts = (category) => {

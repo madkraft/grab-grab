@@ -1,5 +1,5 @@
 - React
 - Chakra
-- Airtable
 - netlify + netlify functions
+- FaunaDB
 - PWA

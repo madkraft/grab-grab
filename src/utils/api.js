@@ -1,46 +1,25 @@
 import axios from "axios";
-import {
-  localAddProduct,
-  localFetchCodes,
-  localFetchRecords,
-} from "./localApi";
 
-export const fetchRecords = async ({ all } = { all: false }) => {
-  if (process.env.NODE_ENV === "development") {
-    return localFetchRecords(all);
-  }
-
+export const fetchProducts = async ({ all } = { all: false }) => {
   const url = all
-    ? `../.netlify/functions/fetchAllProducts`
-    : `../.netlify/functions/fetchListProducts`;
+    ? `.netlify/functions/products-read-all`
+    : `.netlify/functions/products-read-selected`;
   const { data } = await axios.get(url);
-  return data.records;
+  return data;
 };
 
 export const setProduct = async (id, amount) => {
-  if (process.env.NODE_ENV === "development") {
-    return;
-  }
-  const url = `../.netlify/functions/resetProduct`;
-  await axios.patch(url, { records: [{ id, fields: { amount } }] });
+  const url = `.netlify/functions/products-update`;
+  return await axios.post(url, { id, amount });
 };
 
 export const addProduct = async (productName, category) => {
-  if (process.env.NODE_ENV === "development") {
-    return localAddProduct(productName, category);
-  }
-  const url = `../.netlify/functions/addProduct`;
-  return await axios.post(url, {
-    fields: { name: productName, category },
-  });
+  const url = `.netlify/functions/products-create`;
+  return await axios.post(url, { name: productName, category, amount: 0 });
 };
 
 export const fetchCodes = async () => {
-  if (process.env.NODE_ENV === "development") {
-    return localFetchCodes();
-  }
-
-  const url = `../.netlify/functions/fetchCodes`;
+  const url = `.netlify/functions/fetchCodes`;
   const { data } = await axios.get(url);
   return data.records;
 };

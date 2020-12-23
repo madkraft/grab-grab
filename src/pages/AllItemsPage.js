@@ -1,8 +1,11 @@
+import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { List } from "../components/List";
 import { Page } from "../components/Page";
-import { fetchRecords, setProduct } from "../utils/api";
-import { getAllProducts } from "../utils/records";
+import { fetchProducts, setProduct } from "../utils/api";
+import { ReactComponent as Loader } from "../assets/images/loading.svg";
+import { ProductList } from "../components/ProductList";
+import { EmptyList } from "../components/EmptyList";
+import { transformProducts } from "../utils/records";
 
 export const AllItemsPage = () => {
   const [allCategories, setAllCategories] = useState({});
@@ -10,8 +13,8 @@ export const AllItemsPage = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const records = await fetchRecords({ all: true });
-      const allProducts = getAllProducts(records);
+      const { data } = await fetchProducts({ all: true });
+      const allProducts = transformProducts(data);
       setAllCategories(allProducts);
       setLoading(false);
     };
@@ -21,25 +24,33 @@ export const AllItemsPage = () => {
 
   const handleAddToList = (product) => {
     const { id, amount, category } = product;
-
+    const oldCategories = { ...allCategories };
     allCategories[category] = allCategories[category].map((cat) => {
-      return cat.id === id ? { ...cat, amount: amount ? null : 1 } : cat;
+      return cat.id === id ? { ...cat, amount: amount ? 0 : 1 } : cat;
     });
-
-    setProduct(id, amount ? null : 1);
+    setProduct(id, amount ? 0 : 1).catch((err) => {
+      setAllCategories(oldCategories);
+    });
     setAllCategories({ ...allCategories });
-    // invalidateCache();
-    // use context to propagate cache
   };
 
   return (
     <Page>
-      <List
-        loading={loading}
-        categories={allCategories}
-        handleClick={handleAddToList}
-        canManage={true}
-      />
+      {loading && (
+        <Box display="flex" justifyContent="center" mt="1rem">
+          <Loader height="50px" />
+        </Box>
+      )}
+
+      {!loading && !Object.entries(allCategories).length && <EmptyList />}
+
+      <Box bg="gray.800">
+        <ProductList
+          categories={allCategories}
+          handleClick={handleAddToList}
+          canManage={true}
+        />
+      </Box>
     </Page>
   );
 };

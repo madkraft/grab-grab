@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Box } from "@chakra-ui/react";
 
-import { List } from "../components/List";
 import { Page } from "../components/Page";
-import { fetchRecords, setProduct } from "../utils/api";
-import { getProducts } from "../utils/records";
+import { fetchProducts, setProduct } from "../utils/api";
+import { transformProducts } from "../utils/records";
+import { ReactComponent as Loader } from "../assets/images/loading.svg";
+import { ProductList } from "../components/ProductList";
+import { EmptyList } from "../components/EmptyList";
 
 export const SelectedItemsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -11,8 +14,8 @@ export const SelectedItemsPage = () => {
 
   useEffect(() => {
     const getSelectedProducts = async () => {
-      const records = await fetchRecords();
-      const listProducts = getProducts(records);
+      const { data } = await fetchProducts();
+      const listProducts = transformProducts(data);
       setListCategories(listProducts);
       setLoading(false);
     };
@@ -22,22 +25,35 @@ export const SelectedItemsPage = () => {
 
   const handleRemoveProduct = (product) => {
     const { category, id } = product;
+    const oldCategories = { ...listCategories };
 
     listCategories[category] = listCategories[category].filter(
       (cat) => cat.id !== id
     );
 
-    setProduct(id, null);
+    setProduct(id, 0).catch((err) => {
+      setListCategories(oldCategories);
+    });
     setListCategories({ ...listCategories });
   };
 
   return (
     <Page>
-      <List
-        loading={loading}
-        categories={listCategories}
-        handleClick={handleRemoveProduct}
-      />
+      {loading && (
+        <Box display="flex" justifyContent="center" mt="1rem">
+          <Loader height="50px" />
+        </Box>
+      )}
+
+      {!loading && !Object.entries(listCategories).length && <EmptyList />}
+
+      <Box bg="gray.800">
+        <ProductList
+          categories={listCategories}
+          handleClick={handleRemoveProduct}
+          canManage={false}
+        />
+      </Box>
     </Page>
   );
 };

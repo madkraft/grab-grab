@@ -1,0 +1,12 @@
+[build]
+  functions = "src/functions"
+  # This will be run the site build
+  command = "npm run build"
+  # This is the directory publishing to netlify's CDN
+  publish = "build"
+
+[dev]
+  functions = "src/functions"
+  port = 4000
+  # Local dev command. A.k.a npm start
+  command = "npm start"
