@@ -30,6 +30,7 @@ const RouterLink = (props) => {
 export const Nav = () => {
   return (
     <Stack
+      userSelect="none"
       fontSize="sm"
       spacing={4}
       direction="row"

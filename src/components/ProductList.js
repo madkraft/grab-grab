@@ -49,9 +49,9 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     }
   };
 
-  const handleMouseOut = () => {
-    clearTimeout(delay);
-  };
+  // const handleMouseOut = () => {
+  //   clearTimeout(delay);
+  // };
 
   const handleManageProducts = (category) => {
     setSelectedCategory(category);
@@ -102,9 +102,12 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
                 <Box
-                  onMouseDown={() => handleMouseDown(product)}
-                  onMouseUp={() => handleMouseUp(product)}
-                  onMouseOut={handleMouseOut}
+                  onTouchStart={() => handleMouseDown(product)}
+                  onTouchEnd={() => handleMouseUp(product)}
+                  onClick={() => handleClick(product)}
+                  // onMouseDown={() => handleMouseDown(product)}
+                  // onMouseUp={() => handleMouseUp(product)}
+                  // onMouseOut={handleMouseOut}
                   key={product.id}
                 >
                   <Product {...product} />

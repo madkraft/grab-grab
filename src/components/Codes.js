@@ -9,6 +9,7 @@ import {
   useDisclosure,
   Image,
   ModalHeader,
+  Box,
 } from "@chakra-ui/react";
 import { fetchCodes } from "../utils/api";
 import { Product } from "./Product";
@@ -42,11 +43,9 @@ export const Codes = () => {
       <Grid templateColumns="repeat(2, 1fr)" gap={6}>
         {codes.map((code) => {
           return (
-            <Product
-              key={code.id}
-              name={code.name}
-              handleClick={() => handleCodeClick(code)}
-            />
+            <Box key={code.id} onClick={() => handleCodeClick(code)}>
+              <Product name={code.name} />
+            </Box>
           );
         })}
       </Grid>

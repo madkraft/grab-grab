@@ -18,8 +18,11 @@ export const Product = ({ name, amount, handleClick }) => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
+      onContextMenu={() => false}
     >
-      <Box fontSize="md">{name}</Box>
+      <Box fontSize="md" userSelect="none" onContextMenu={() => false}>
+        {name}
+      </Box>
     </Box>
   );
 };

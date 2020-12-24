@@ -6,7 +6,7 @@ import { theme } from "../theme";
 export const Category = ({ category, canManage, manageProducts }) => {
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">
-      <Box padding="0.5rem" color="gray.500" fontSize="xl">
+      <Box padding="0.5rem" color="gray.500" fontSize="xl" userSelect="none">
         {category}
       </Box>
       {canManage && (
