@@ -18,10 +18,8 @@ export const Product = ({ name, amount, handleClick }) => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      onClick={handleClick}
     >
       <Box fontSize="md">{name}</Box>
-      {/* <Box fontSize="sm">{amount}</Box> */}
     </Box>
   );
 };

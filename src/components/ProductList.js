@@ -13,14 +13,45 @@ import {
 } from "@chakra-ui/react";
 import { Product } from "./Product";
 import { Category } from "./Category";
-import { addProduct } from "../utils/api";
+import { addProduct, deleteProduct, setProductName } from "../utils/api";
 import { theme } from "../theme";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
   const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedProduct, setSelectedProduct] = useState();
   const [newProduct, setNewProduct] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
+  } = useDisclosure();
+
   const initialRef = React.useRef();
+
+  const longpress = 1300;
+  let delay;
+
+  const handleMouseDown = (product) => {
+    const check = () => {
+      setSelectedProduct(product);
+      setNewProduct(product.name);
+      onEditOpen();
+    };
+    delay = setTimeout(check, longpress);
+  };
+
+  const handleMouseUp = (product) => {
+    clearTimeout(delay);
+
+    if (!isEditOpen) {
+      handleClick(product);
+    }
+  };
+
+  const handleMouseOut = () => {
+    clearTimeout(delay);
+  };
 
   const handleManageProducts = (category) => {
     setSelectedCategory(category);
@@ -35,10 +66,29 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onClose();
   };
 
+  const handleEditProduct = (selectedProductId) => {
+    setProductName(selectedProductId, newProduct)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error("Error updating", err);
+      });
+    setNewProduct("");
+    onEditClose();
+  };
+
+  const handleDeleteProduct = (productId) => {
+    deleteProduct(productId).then(() => {
+      window.location.reload();
+    });
+    onEditClose();
+  };
+
   return (
     <>
-      {Object.entries(categories).map(([category, products]) => {
-        if (!products.length) {
+      {categories.map(({ category, products }) => {
+        if (!products?.length) {
           return null;
         }
 
@@ -51,16 +101,69 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             />
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
-                <Product
+                <Box
+                  onMouseDown={() => handleMouseDown(product)}
+                  onMouseUp={() => handleMouseUp(product)}
+                  onMouseOut={handleMouseOut}
                   key={product.id}
-                  {...product}
-                  handleClick={() => handleClick(product)}
-                />
+                >
+                  <Product {...product} />
+                </Box>
               ))}
             </Box>
           </Box>
         );
       })}
+
+      <Modal
+        isOpen={isEditOpen}
+        onClose={onEditClose}
+        isCentered
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader background="gray.600">Edit product name</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody background={theme.background}>
+            <Box padding="1rem">
+              <Input
+                ref={initialRef}
+                color="white"
+                variant="outline"
+                marginBottom="1rem"
+                value={newProduct}
+                onChange={(e) => {
+                  setNewProduct(e.target.value);
+                }}
+              />
+              <Box display="flex" justifyContent="space-between">
+                <Button
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  variant="outline"
+                  onClick={() => {
+                    handleEditProduct(selectedProduct.id);
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  colorScheme="red"
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  variant="outline"
+                  onClick={() => {
+                    handleDeleteProduct(selectedProduct.id);
+                  }}
+                >
+                  Delete product
+                </Button>
+              </Box>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
 
       <Modal
         initialFocusRef={initialRef}
@@ -86,6 +189,8 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
                 }}
               />
               <Button
+                _hover={{ bg: "transparent" }}
+                _active={{ bg: "transparent" }}
                 variant="outline"
                 onClick={() => {
                   handleAddProduct(selectedCategory);

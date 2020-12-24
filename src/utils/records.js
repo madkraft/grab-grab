@@ -1,15 +1,19 @@
 export const transformProducts = (products) => {
-  let activeCategories = {};
+  return products.reduce((acc, current) => {
+    const productsPerCategory = products.filter((filteredProduct) => {
+      return filteredProduct.category === current.category;
+    });
 
-  products.forEach((product) => {
-    const { category } = product;
-
-    if (activeCategories[category]) {
-      activeCategories[category] = [...activeCategories[category], product];
-    } else {
-      activeCategories[category] = [product];
+    if (acc.find((prod) => prod.category === current.category)) {
+      return acc;
     }
-  });
 
-  return activeCategories;
+    return [
+      ...acc,
+      {
+        category: current.category,
+        products: productsPerCategory,
+      },
+    ];
+  }, []);
 };

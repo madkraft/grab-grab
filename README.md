@@ -3,3 +3,4 @@
 - netlify + netlify functions
 - FaunaDB
 - PWA
+- long press to edit

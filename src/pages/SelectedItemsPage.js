@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 
 import { Page } from "../components/Page";
-import { fetchProducts, setProduct } from "../utils/api";
+import { fetchProducts, setProductAmount } from "../utils/api";
 import { transformProducts } from "../utils/records";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
 import { ProductList } from "../components/ProductList";
 import { EmptyList } from "../components/EmptyList";
+import { isEmptyCategories } from "../utils/utils";
 
 export const SelectedItemsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [listCategories, setListCategories] = useState({});
+  const [listCategories, setListCategories] = useState([]);
 
   useEffect(() => {
     const getSelectedProducts = async () => {
@@ -25,16 +26,22 @@ export const SelectedItemsPage = () => {
 
   const handleRemoveProduct = (product) => {
     const { category, id } = product;
-    const oldCategories = { ...listCategories };
+    const oldCategories = [...listCategories];
 
-    listCategories[category] = listCategories[category].filter(
-      (cat) => cat.id !== id
-    );
+    const newCategories = listCategories.map((cat) => {
+      if (cat.category === category) {
+        const updatedProducts = cat.products.filter((prod) => prod.id !== id);
 
-    setProduct(id, 0).catch((err) => {
+        return { ...cat, products: updatedProducts };
+      }
+
+      return cat;
+    });
+
+    setProductAmount(id, 0).catch((err) => {
       setListCategories(oldCategories);
     });
-    setListCategories({ ...listCategories });
+    setListCategories(newCategories);
   };
 
   return (
@@ -45,7 +52,7 @@ export const SelectedItemsPage = () => {
         </Box>
       )}
 
-      {!loading && !Object.entries(listCategories).length && <EmptyList />}
+      {!loading && isEmptyCategories(listCategories) && <EmptyList />}
 
       <Box bg="gray.800">
         <ProductList

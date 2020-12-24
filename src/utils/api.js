@@ -8,9 +8,19 @@ export const fetchProducts = async ({ all } = { all: false }) => {
   return data;
 };
 
-export const setProduct = async (id, amount) => {
+export const setProductAmount = async (id, amount) => {
   const url = `.netlify/functions/products-update`;
   return await axios.post(url, { id, amount });
+};
+
+export const setProductName = async (id, name) => {
+  const url = `.netlify/functions/products-update`;
+  return await axios.post(url, { id, name });
+};
+
+export const deleteProduct = async (id) => {
+  const url = `.netlify/functions/products-delete`;
+  return await axios.post(url, { id });
 };
 
 export const addProduct = async (productName, category) => {

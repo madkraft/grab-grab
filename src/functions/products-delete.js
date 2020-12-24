@@ -6,16 +6,13 @@ const client = new faunadb.Client({
 });
 
 exports.handler = async (event, context) => {
-  const { id, ...productFields } = JSON.parse(event.body);
-  console.log("Function `products-update` invoked", productFields);
+  const { id } = JSON.parse(event.body);
 
-  const product = { data: productFields };
-
-  console.log("Updating product:", id);
+  console.log("Function `products-delete` invoked. Delete id", id);
 
   try {
     const response = await client.query(
-      q.Update(q.Ref(q.Collection("products"), id), product)
+      q.Delete(q.Ref(q.Collection("products"), id))
     );
     return {
       statusCode: 200,

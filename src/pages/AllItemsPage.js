@@ -1,14 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Page } from "../components/Page";
-import { fetchProducts, setProduct } from "../utils/api";
+import { fetchProducts, setProductAmount } from "../utils/api";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
 import { ProductList } from "../components/ProductList";
 import { EmptyList } from "../components/EmptyList";
 import { transformProducts } from "../utils/records";
 
 export const AllItemsPage = () => {
-  const [allCategories, setAllCategories] = useState({});
+  const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,14 +24,22 @@ export const AllItemsPage = () => {
 
   const handleAddToList = (product) => {
     const { id, amount, category } = product;
-    const oldCategories = { ...allCategories };
-    allCategories[category] = allCategories[category].map((cat) => {
-      return cat.id === id ? { ...cat, amount: amount ? 0 : 1 } : cat;
+    const oldCategories = [...allCategories];
+    const newCategories = allCategories.map((cat) => {
+      if (cat.category === category) {
+        const updatedProducts = cat.products.map((prod) => {
+          return prod.id === id ? { ...prod, amount: amount ? 0 : 1 } : prod;
+        });
+
+        return { ...cat, products: updatedProducts };
+      }
+
+      return cat;
     });
-    setProduct(id, amount ? 0 : 1).catch((err) => {
+    setAllCategories(newCategories);
+    setProductAmount(id, amount ? 0 : 1).catch((err) => {
       setAllCategories(oldCategories);
     });
-    setAllCategories({ ...allCategories });
   };
 
   return (
@@ -42,7 +50,7 @@ export const AllItemsPage = () => {
         </Box>
       )}
 
-      {!loading && !Object.entries(allCategories).length && <EmptyList />}
+      {!loading && !allCategories.length && <EmptyList />}
 
       <Box bg="gray.800">
         <ProductList

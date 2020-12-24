@@ -1,5 +1,6 @@
+const axios = require("axios");
+
 exports.handler = async (event, context, callback) => {
-  const axios = require("axios");
   const pass = (body) => {
     callback(null, { statusCode: 200, body: JSON.stringify(body) });
   };
