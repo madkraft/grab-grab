@@ -102,9 +102,15 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
                 <Box
-                  onTouchStart={() => handleMouseDown(product)}
+                  onTouchStart={(e) => {
+                    handleMouseDown(product);
+                    e.preventDefault();
+                  }}
                   onTouchEnd={() => handleMouseUp(product)}
-                  onClick={() => handleClick(product)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleClick(product);
+                  }}
                   // onMouseDown={() => handleMouseDown(product)}
                   // onMouseUp={() => handleMouseUp(product)}
                   // onMouseOut={handleMouseOut}
