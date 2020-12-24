@@ -29,7 +29,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
 
   const initialRef = React.useRef();
 
-  const longpress = 1300;
+  const longpress = 800;
   let delay;
 
   const handleMouseDown = (product) => {
@@ -110,10 +110,6 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
                     e.preventDefault();
                     handleMouseUp(product);
                   }}
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   handleClick(product);
-                  // }}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     handleMouseDown(product);
