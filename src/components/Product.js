@@ -11,7 +11,7 @@ export const Product = ({ name, amount, handleClick }) => {
       background={amount ? theme.tealBackground : null}
       minHeight="0"
       minWidth="0"
-      padding="0.5rem"
+      padding="0.2rem"
       textAlign="center"
       height={32}
       display="flex"
