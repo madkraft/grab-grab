@@ -42,9 +42,10 @@ export const Nav = () => {
       background={theme.background}
       zIndex="1"
     >
-      <RouterLink color={theme.teal} to="/">
-        Grab
+      <RouterLink color={theme.white} to="/">
+        Codes
       </RouterLink>
+
       <RouterLink color={theme.orange} to="/all">
         All Items
       </RouterLink>
@@ -57,8 +58,8 @@ export const Nav = () => {
         icon={<SearchIcon />}
       />
 
-      <RouterLink color={theme.white} to="/codes">
-        Codes
+      <RouterLink color={theme.teal} to="/grab">
+        Grab
       </RouterLink>
     </Stack>
   );
