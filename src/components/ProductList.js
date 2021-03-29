@@ -34,13 +34,11 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
   let delay;
 
   useLayoutEffect(() => {
-    const handleScroll = () => {
-      setIsScrolling(true);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    //   const handleScroll = () => {
+    //     setIsScrolling(true);
+    //   };
+    //   window.addEventListener("scroll", handleScroll);
+    //   return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleMouseDown = (product) => {
@@ -101,8 +99,12 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onEditClose();
   };
 
+  const handleScroll = () => {
+    setIsScrolling(true);
+  };
+
   return (
-    <>
+    <Box onScroll={handleScroll} background={isScrolling ? "pink" : "yellow"}>
       {categories.map(({ category, products }) => {
         if (!products?.length) {
           return null;
@@ -238,6 +240,6 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
