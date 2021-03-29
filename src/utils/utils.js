@@ -5,3 +5,7 @@ export const isEmptyCategories = (listCategories) => {
 
   return listCategories.length === 0;
 };
+
+export const filterProducts = (products, query) => {
+  return products.filter(({ name }) => name.toLowerCase().includes(query));
+};

@@ -6,21 +6,38 @@ import { ReactComponent as Loader } from "../assets/images/loading.svg";
 import { ProductList } from "../components/ProductList";
 import { EmptyList } from "../components/EmptyList";
 import { transformProducts } from "../utils/records";
+import { SearchContext } from "../contexts/SearchContext";
+import { filterProducts } from "../utils/utils";
 
 export const AllItemsPage = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchedProduct, setSearchedProduct] = useState("");
+  const [fetchedData, setFetchedData] = useState();
 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await fetchProducts({ all: true });
       const allProducts = transformProducts(data);
       setAllCategories(allProducts);
+      setFetchedData(data);
       setLoading(false);
     };
 
     getProducts();
   }, []);
+
+  useEffect(() => {
+    if (fetchedData) {
+      let data;
+
+      if (searchedProduct) {
+        data = filterProducts(fetchedData, searchedProduct);
+      }
+
+      setAllCategories(transformProducts(data ?? fetchedData));
+    }
+  }, [searchedProduct, fetchedData]);
 
   const handleAddToList = (product) => {
     const { id, amount, category } = product;
@@ -43,22 +60,24 @@ export const AllItemsPage = () => {
   };
 
   return (
-    <Page>
-      {loading && (
-        <Box display="flex" justifyContent="center" mt="1rem">
-          <Loader height="50px" />
+    <SearchContext.Provider value={{ searchedProduct, setSearchedProduct }}>
+      <Page>
+        {loading && (
+          <Box display="flex" justifyContent="center" mt="1rem">
+            <Loader height="50px" />
+          </Box>
+        )}
+
+        {!loading && !allCategories.length && <EmptyList />}
+
+        <Box bg="gray.800">
+          <ProductList
+            categories={allCategories}
+            handleClick={handleAddToList}
+            canManage={true}
+          />
         </Box>
-      )}
-
-      {!loading && !allCategories.length && <EmptyList />}
-
-      <Box bg="gray.800">
-        <ProductList
-          categories={allCategories}
-          handleClick={handleAddToList}
-          canManage={true}
-        />
-      </Box>
-    </Page>
+      </Page>
+    </SearchContext.Provider>
   );
 };
