@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   Box,
   Button,
@@ -18,43 +18,56 @@ import { theme } from "../theme";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
   const [selectedCategory, setSelectedCategory] = useState();
-  const [
-    selectedProduct,
-    // setSelectedProduct
-  ] = useState();
+  const [selectedProduct, setSelectedProduct] = useState();
   const [newProduct, setNewProduct] = useState("");
+  const [isScrolling, setIsScrolling] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditOpen,
-    // onOpen: onEditOpen,
+    onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure();
 
   const initialRef = React.useRef();
 
-  // const longpress = 500;
-  // let delay;
+  const longpress = 500;
+  let delay;
 
-  // const handleMouseDown = (product) => {
-  //   const check = () => {
-  //     setSelectedProduct(product);
-  //     // setNewProduct(product.name);
-  //     // onEditOpen();
-  //   };
-  //   delay = setTimeout(check, longpress);
-  // };
+  useLayoutEffect(() => {
+    const handleScroll = () => {
+      setIsScrolling(true);
+    };
 
-  // const handleMouseUp = (product) => {
-  //   clearTimeout(delay);
+    window.addEventListener("scroll", handleScroll);
 
-  //   if (!isEditOpen) {
-  //     handleClick(product);
-  //   }
-  // };
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // const handleMouseOut = () => {
-  //   clearTimeout(delay);
-  // };
+  const handleMouseDown = (product) => {
+    const check = () => {
+      if (isScrolling) {
+        return;
+      }
+      setSelectedProduct(product);
+      setNewProduct(product.name);
+      onEditOpen();
+      setIsScrolling(false);
+    };
+    delay = setTimeout(check, longpress);
+  };
+
+  const handleMouseUp = (product) => {
+    clearTimeout(delay);
+
+    if (!isEditOpen && !isScrolling) {
+      handleClick(product);
+      setIsScrolling(false);
+    }
+  };
+
+  const handleMouseOut = () => {
+    clearTimeout(delay);
+  };
 
   const handleManageProducts = (category) => {
     setSelectedCategory(category);
@@ -105,29 +118,29 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
                 <Box
-                  onClick={() => {
-                    handleClick(product);
+                  // onClick={() => {
+                  //   handleClick(product);
+                  // }}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    handleMouseDown(product);
                   }}
-                  // onTouchStart={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseDown(product);
-                  // }}
-                  // onTouchEnd={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseUp(product);
-                  // }}
-                  // onMouseDown={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseDown(product);
-                  // }}
-                  // onMouseUp={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseUp(product);
-                  // }}
-                  // onMouseOut={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseOut();
-                  // }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    handleMouseUp(product);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    handleMouseDown(product);
+                  }}
+                  onMouseUp={(e) => {
+                    e.preventDefault();
+                    handleMouseUp(product);
+                  }}
+                  onMouseOut={(e) => {
+                    e.preventDefault();
+                    handleMouseOut();
+                  }}
                   key={product.id}
                 >
                   <Product {...product} />
