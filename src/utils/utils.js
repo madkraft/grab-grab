@@ -7,5 +7,7 @@ export const isEmptyCategories = (listCategories) => {
 };
 
 export const filterProducts = (products, query) => {
-  return products.filter(({ name }) => name.toLowerCase().includes(query));
+  return products.filter(({ name }) =>
+    name.toLowerCase().includes(query.toLowerCase())
+  );
 };
