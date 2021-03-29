@@ -28,13 +28,13 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/" exact={true}>
-            <SelectedItemsPage />
+            <CodesPage />
           </Route>
           <Route path="/all" exact={true}>
             <AllItemsPage />
           </Route>
-          <Route path="/codes" exact={true}>
-            <CodesPage />
+          <Route path="/grab" exact={true}>
+            <SelectedItemsPage />
           </Route>
         </Switch>
       </Router>
