@@ -1,7 +1,8 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
+  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -15,12 +16,12 @@ import { Product } from "./Product";
 import { Category } from "./Category";
 import { addProduct, deleteProduct, setProductName } from "../utils/api";
 import { theme } from "../theme";
+import { EditIcon } from "@chakra-ui/icons";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [selectedProduct, setSelectedProduct] = useState();
   const [newProduct, setNewProduct] = useState("");
-  const [isScrolling, setIsScrolling] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditOpen,
@@ -30,41 +31,10 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
 
   const initialRef = React.useRef();
 
-  const longpress = 500;
-  let delay;
-
-  useLayoutEffect(() => {
-    //   const handleScroll = () => {
-    //     setIsScrolling(true);
-    //   };
-    //   window.addEventListener("scroll", handleScroll);
-    //   return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleMouseDown = (product) => {
-    const check = () => {
-      if (isScrolling) {
-        return;
-      }
-      setSelectedProduct(product);
-      setNewProduct(product.name);
-      onEditOpen();
-      setIsScrolling(false);
-    };
-    delay = setTimeout(check, longpress);
-  };
-
-  const handleMouseUp = (product) => {
-    clearTimeout(delay);
-
-    if (!isEditOpen && !isScrolling) {
-      handleClick(product);
-      setIsScrolling(false);
-    }
-  };
-
-  const handleMouseOut = () => {
-    clearTimeout(delay);
+  const openEditModal = (product) => {
+    setSelectedProduct(product);
+    setNewProduct(product.name);
+    onEditOpen();
   };
 
   const handleManageProducts = (category) => {
@@ -99,12 +69,8 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onEditClose();
   };
 
-  const handleScroll = () => {
-    setIsScrolling(true);
-  };
-
   return (
-    <Box onScroll={handleScroll} background={isScrolling ? "pink" : "yellow"}>
+    <>
       {categories.map(({ category, products }) => {
         if (!products?.length) {
           return null;
@@ -119,33 +85,24 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             />
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
-                <Box
-                  // onClick={() => {
-                  //   handleClick(product);
-                  // }}
-                  onTouchStart={(e) => {
-                    e.preventDefault();
-                    handleMouseDown(product);
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    handleMouseUp(product);
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    handleMouseDown(product);
-                  }}
-                  onMouseUp={(e) => {
-                    e.preventDefault();
-                    handleMouseUp(product);
-                  }}
-                  onMouseOut={(e) => {
-                    e.preventDefault();
-                    handleMouseOut();
-                  }}
-                  key={product.id}
-                >
-                  <Product {...product} />
+                <Box key={product.id} position="relative">
+                  <Box onClick={() => handleClick(product)}>
+                    <Product {...product} />
+                  </Box>
+                  {canManage && (
+                    <IconButton
+                      aria-label="Edit product"
+                      icon={<EditIcon />}
+                      size="xs"
+                      position="absolute"
+                      top="10px"
+                      right="10px"
+                      _hover={{ bg: "transparent" }}
+                      _active={{ bg: "transparent" }}
+                      variant="ghost"
+                      onClick={() => openEditModal(product)}
+                    ></IconButton>
+                  )}
                 </Box>
               ))}
             </Box>
@@ -240,6 +197,6 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </Box>
+    </>
   );
 };

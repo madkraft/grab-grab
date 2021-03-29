@@ -4,7 +4,9 @@ export const fetchProducts = async ({ all } = { all: false }) => {
   const url = all
     ? `.netlify/functions/products-read-all`
     : `.netlify/functions/products-read-selected`;
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(
+    process.env.NODE_ENV === "production" ? url : "./data.json"
+  );
   return data;
 };
 

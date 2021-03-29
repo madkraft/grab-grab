@@ -1,0 +1,154 @@
+{
+  "data": [
+    {
+      "id": "285668778459529733",
+      "name": "Rubbish bags 35L",
+      "category": "Housekeeping",
+      "amount": 1
+    },
+    {
+      "id": "285668778459533829",
+      "name": "Millet",
+      "category": "Dry",
+      "amount": 1
+    },
+    {
+      "id": "285668778460580357",
+      "name": "Butter",
+      "category": "Dairy",
+      "amount": 1
+    },
+    {
+      "id": "285668778460583429",
+      "name": "Nuts mix",
+      "category": "Snacks",
+      "amount": 1
+    },
+    {
+      "id": "285668778460584453",
+      "name": "Apples",
+      "category": "Fruits",
+      "amount": 1
+    },
+    {
+      "id": "285668778460598789",
+      "name": "Baby tomatoes",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778460615173",
+      "name": "Parsley",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778460618245",
+      "name": "Mozarella",
+      "category": "Dairy",
+      "amount": 1
+    },
+    {
+      "id": "285668778460626437",
+      "name": "Tortillas",
+      "category": "Baked",
+      "amount": 1
+    },
+    {
+      "id": "285668778461628933",
+      "name": "Yogurt",
+      "category": "Dairy",
+      "amount": 1
+    },
+    {
+      "id": "285668778461630981",
+      "name": "Milk",
+      "category": "Dairy",
+      "amount": 1
+    },
+    {
+      "id": "285668778461634053",
+      "name": "Cheese",
+      "category": "Dairy",
+      "amount": 1
+    },
+    {
+      "id": "285668778461635077",
+      "name": "Apricots",
+      "category": "Snacks",
+      "amount": 1
+    },
+    {
+      "id": "285668778461642245",
+      "name": "Oranges",
+      "category": "Fruits",
+      "amount": 1
+    },
+    {
+      "id": "285668778461643269",
+      "name": "Pears",
+      "category": "Fruits",
+      "amount": 1
+    },
+    {
+      "id": "285668778461645317",
+      "name": "Spinach",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778461647365",
+      "name": "Kiwi",
+      "category": "Fruits",
+      "amount": 1
+    },
+    {
+      "id": "285668778461650437",
+      "name": "Bananas",
+      "category": "Fruits",
+      "amount": 1
+    },
+    {
+      "id": "285668778461651461",
+      "name": "Potatoes",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778461652485",
+      "name": "Onion white",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778461653509",
+      "name": "Mushrooms ",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "285668778461661701",
+      "name": "Carrots",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "293243550481515011",
+      "name": "Basil",
+      "category": "Veggies",
+      "amount": 1
+    },
+    {
+      "id": "294425560646418950",
+      "name": "Tagliatelle ",
+      "category": "Dry",
+      "amount": 1
+    },
+    {
+      "id": "294425664350585347",
+      "name": "Leek",
+      "category": "Veggies",
+      "amount": 1
+    }
+  ]
+}
