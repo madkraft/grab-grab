@@ -18,10 +18,7 @@ import { theme } from "../theme";
 
 export const ProductList = ({ categories, canManage, handleClick }) => {
   const [selectedCategory, setSelectedCategory] = useState();
-  const [
-    selectedProduct,
-    // setSelectedProduct
-  ] = useState();
+  const [selectedProduct, setSelectedProduct] = useState();
   const [newProduct, setNewProduct] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -32,25 +29,25 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
 
   const initialRef = React.useRef();
 
-  // const longpress = 500;
-  // let delay;
+  const longpress = 500;
+  let delay;
 
-  // const handleMouseDown = (product) => {
-  //   const check = () => {
-  //     setSelectedProduct(product);
-  //     setNewProduct(product.name);
-  //     onEditOpen();
-  //   };
-  //   delay = setTimeout(check, longpress);
-  // };
+  const handleMouseDown = (product) => {
+    const check = () => {
+      setSelectedProduct(product);
+      // setNewProduct(product.name);
+      // onEditOpen();
+    };
+    delay = setTimeout(check, longpress);
+  };
 
-  // const handleMouseUp = (product) => {
-  //   clearTimeout(delay);
+  const handleMouseUp = (product) => {
+    clearTimeout(delay);
 
-  //   if (!isEditOpen) {
-  //     handleClick(product);
-  //   }
-  // };
+    if (!isEditOpen) {
+      handleClick(product);
+    }
+  };
 
   // const handleMouseOut = () => {
   //   clearTimeout(delay);
@@ -105,14 +102,14 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="5px">
               {products.map((product) => (
                 <Box
-                  // onTouchStart={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseDown(product);
-                  // }}
-                  // onTouchEnd={(e) => {
-                  //   e.preventDefault();
-                  //   handleMouseUp(product);
-                  // }}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    handleMouseDown(product);
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    handleMouseUp(product);
+                  }}
                   // onMouseDown={(e) => {
                   //   e.preventDefault();
                   //   handleMouseDown(product);
