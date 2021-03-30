@@ -1,5 +1,14 @@
-export const transformProducts = (products) => {
-  return products.reduce((acc, current) => {
+import { IProductResponse } from "./api";
+
+export interface ICategory {
+  category: string;
+  products: IProductResponse[];
+}
+
+export const transformProducts = (
+  products: IProductResponse[]
+): ICategory[] => {
+  return products.reduce((acc: ICategory[], current: IProductResponse) => {
     const productsPerCategory = products.filter((filteredProduct) => {
       return filteredProduct.category === current.category;
     });

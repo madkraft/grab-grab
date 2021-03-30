@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Grid,
   Modal,
@@ -14,9 +14,15 @@ import {
 import { fetchCodes } from "../utils/api";
 import { Product } from "./Product";
 
+interface Code {
+  id: string;
+  name: string;
+  url: string;
+}
+
 export const Codes = () => {
-  const [codes, setCodes] = useState([]);
-  const [selectedCode, setSelectedCode] = useState({});
+  const [codes, setCodes] = useState<Code[]>([]);
+  const [selectedCode, setSelectedCode] = useState<Code>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -33,7 +39,7 @@ export const Codes = () => {
     getCodes();
   }, []);
 
-  const handleCodeClick = (code) => {
+  const handleCodeClick = (code: Code) => {
     setSelectedCode(code);
     onOpen();
   };
@@ -57,13 +63,15 @@ export const Codes = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader background="gray.600">{selectedCode.name}</ModalHeader>
+          <ModalHeader background="gray.600">
+            {selectedCode?.name ?? ""}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Image
               minHeight="230px"
-              src={selectedCode.url}
-              alt={selectedCode.name}
+              src={selectedCode?.url ?? ""}
+              alt={selectedCode?.name ?? ""}
             />
           </ModalBody>
         </ModalContent>

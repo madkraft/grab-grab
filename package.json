@@ -2,32 +2,38 @@
   "name": "grab-grab",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@chakra-ui/icons": "^1.0.1",
-    "@chakra-ui/react": "^1.0.0",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.20.0",
-    "faunadb": "^4.0.0",
-    "framer-motion": "^2.9.5",
-    "lodash": "^4.17.20",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
-  },
-  "devDependencies": {
-    "netlify-cli": "^2.19.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "dev": "netlify dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.8",
+    "@chakra-ui/react": "^1.4.2",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.1",
+    "axios": "^0.21.1",
+    "faunadb": "^4.1.3",
+    "framer-motion": "^4.0.3",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "typescript": "^4.2.3",
+    "react-scripts": "4.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "netlify-cli": "^3.13.9"
   },
   "eslintConfig": {
     "extends": "react-app"

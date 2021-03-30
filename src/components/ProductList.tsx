@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -14,13 +14,29 @@ import {
 } from "@chakra-ui/react";
 import { Product } from "./Product";
 import { Category } from "./Category";
-import { addProduct, deleteProduct, setProductName } from "../utils/api";
-import { theme } from "../theme";
 import { EditIcon } from "@chakra-ui/icons";
+import {
+  addProduct,
+  deleteProduct,
+  setProductName,
+  IProductResponse,
+} from "../utils/api";
+import { theme } from "../theme";
+import { ICategory } from "../utils/records";
 
-export const ProductList = ({ categories, canManage, handleClick }) => {
-  const [selectedCategory, setSelectedCategory] = useState();
-  const [selectedProduct, setSelectedProduct] = useState();
+interface IProductListProps {
+  categories: ICategory[];
+  canManage: boolean;
+  handleClick: (product: IProductResponse) => void;
+}
+
+export const ProductList: FC<IProductListProps> = ({
+  categories,
+  canManage,
+  handleClick,
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<IProductResponse>();
   const [newProduct, setNewProduct] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -29,20 +45,20 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onClose: onEditClose,
   } = useDisclosure();
 
-  const initialRef = React.useRef();
+  const initialRef = useRef();
 
-  const openEditModal = (product) => {
+  const openEditModal = (product: IProductResponse) => {
     setSelectedProduct(product);
     setNewProduct(product.name);
     onEditOpen();
   };
 
-  const handleManageProducts = (category) => {
+  const handleManageProducts = (category: string) => {
     setSelectedCategory(category);
     onOpen();
   };
 
-  const handleAddProduct = (category) => {
+  const handleAddProduct = (category: string = "") => {
     setNewProduct("");
     addProduct(newProduct, category).then(({ data }) => {
       window.location.reload();
@@ -50,7 +66,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onClose();
   };
 
-  const handleEditProduct = (selectedProductId) => {
+  const handleEditProduct = (selectedProductId: string) => {
     setProductName(selectedProductId, newProduct)
       .then(() => {
         window.location.reload();
@@ -62,7 +78,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
     onEditClose();
   };
 
-  const handleDeleteProduct = (productId) => {
+  const handleDeleteProduct = (productId: string) => {
     deleteProduct(productId).then(() => {
       window.location.reload();
     });
@@ -123,7 +139,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
           <ModalBody background={theme.background}>
             <Box padding="1rem">
               <Input
-                ref={initialRef}
+                ref={initialRef.current}
                 color="white"
                 variant="outline"
                 marginBottom="1rem"
@@ -138,7 +154,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
                   _active={{ bg: "transparent" }}
                   variant="outline"
                   onClick={() => {
-                    handleEditProduct(selectedProduct.id);
+                    handleEditProduct(selectedProduct?.id ?? "");
                   }}
                 >
                   Save
@@ -149,7 +165,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
                   _active={{ bg: "transparent" }}
                   variant="outline"
                   onClick={() => {
-                    handleDeleteProduct(selectedProduct.id);
+                    handleDeleteProduct(selectedProduct?.id ?? "");
                   }}
                 >
                   Delete product
@@ -161,7 +177,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
       </Modal>
 
       <Modal
-        initialFocusRef={initialRef}
+        initialFocusRef={initialRef.current}
         isOpen={isOpen}
         onClose={onClose}
         isCentered
@@ -174,7 +190,7 @@ export const ProductList = ({ categories, canManage, handleClick }) => {
           <ModalBody background={theme.background}>
             <Box padding="1rem">
               <Input
-                ref={initialRef}
+                ref={initialRef.current}
                 color="white"
                 variant="outline"
                 marginBottom="1rem"

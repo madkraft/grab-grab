@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { FC, useContext } from "react";
 import {
   Box,
   Button,
@@ -12,7 +12,12 @@ import { isNil } from "lodash";
 import { theme } from "../theme";
 import { SearchContext } from "../contexts/SearchContext";
 
-const RouterLink = (props) => {
+interface IRouterLinkProps {
+  color: string;
+  to: string;
+}
+
+const RouterLink: FC<IRouterLinkProps> = ({ color, to, children }) => {
   return (
     <NavLink
       exact
@@ -25,17 +30,17 @@ const RouterLink = (props) => {
       }}
       activeStyle={{
         borderWidth: "2px",
-        borderColor: props.color,
+        borderColor: color,
         borderStyle: "solid",
       }}
-      to={props.to}
+      to={to}
     >
-      {props.children}
+      {children}
     </NavLink>
   );
 };
 
-export const Nav = () => {
+export const Nav: FC = () => {
   const { searchedProduct, setSearchedProduct } = useContext(SearchContext);
 
   return (

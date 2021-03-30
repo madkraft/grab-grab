@@ -1,4 +1,3 @@
-import React from "react";
 import { Codes } from "../components/Codes";
 import { Page } from "../components/Page";
 

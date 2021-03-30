@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 
 import { Page } from "../components/Page";
-import { fetchProducts, setProductAmount } from "../utils/api";
-import { transformProducts } from "../utils/records";
+import {
+  fetchProducts,
+  IProductResponse as IProduct,
+  setProductAmount,
+} from "../utils/api";
+import { ICategory, transformProducts } from "../utils/records";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
 import { ProductList } from "../components/ProductList";
 import { EmptyList } from "../components/EmptyList";
@@ -11,7 +15,7 @@ import { isEmptyCategories } from "../utils/utils";
 
 export const SelectedItemsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [listCategories, setListCategories] = useState([]);
+  const [listCategories, setListCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
     const getSelectedProducts = async () => {
@@ -24,7 +28,7 @@ export const SelectedItemsPage = () => {
     getSelectedProducts();
   }, []);
 
-  const handleRemoveProduct = (product) => {
+  const handleRemoveProduct = (product: IProduct) => {
     const { category, id } = product;
     const oldCategories = [...listCategories];
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { AllItemsPage } from "./pages/AllItemsPage";
@@ -21,7 +20,6 @@ const globalTheme = extendTheme({
   },
 });
 
-// <Typography /> */
 const App = () => {
   return (
     <ChakraProvider theme={globalTheme}>

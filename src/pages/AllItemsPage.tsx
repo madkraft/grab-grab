@@ -1,19 +1,23 @@
 import { Box } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Page } from "../components/Page";
-import { fetchProducts, setProductAmount } from "../utils/api";
+import {
+  fetchProducts,
+  IProductResponse,
+  setProductAmount,
+} from "../utils/api";
 import { ReactComponent as Loader } from "../assets/images/loading.svg";
 import { ProductList } from "../components/ProductList";
 import { EmptyList } from "../components/EmptyList";
-import { transformProducts } from "../utils/records";
+import { ICategory, transformProducts } from "../utils/records";
 import { SearchContext } from "../contexts/SearchContext";
 import { filterProducts } from "../utils/utils";
 
 export const AllItemsPage = () => {
-  const [allCategories, setAllCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState<ICategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchedProduct, setSearchedProduct] = useState("");
-  const [fetchedData, setFetchedData] = useState();
+  const [fetchedData, setFetchedData] = useState<IProductResponse[]>();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -39,10 +43,10 @@ export const AllItemsPage = () => {
     }
   }, [searchedProduct, fetchedData]);
 
-  const handleAddToList = (product) => {
+  const handleAddToList = (product: IProductResponse) => {
     const { id, amount, category } = product;
     const oldCategories = [...allCategories];
-    const newCategories = allCategories.map((cat) => {
+    const newCategories = allCategories.map((cat: ICategory) => {
       if (cat.category === category) {
         const updatedProducts = cat.products.map((prod) => {
           return prod.id === id ? { ...prod, amount: amount ? 0 : 1 } : prod;
